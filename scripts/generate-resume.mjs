@@ -13,7 +13,7 @@ const contact = {
   name: "Serdar Bakirtas",
   title: "Senior Apple Platform Engineer",
   location: "Berlin, Germany",
-  email: "hello@serdarbakirtas.com",
+  email: "serdarbakirtas@pm.me",
   linkedin: "linkedin.com/in/serdarbakirtas",
   github: "github.com/serdarbakirtas",
   site: "serdarbakirtas.com",

@@ -7,14 +7,14 @@ export const siteConfig = {
   seoTitle:
     "Serdar Bakirtas | Senior Apple Platform Engineer | Swift, AI & Privacy-first Products",
   location: "Berlin, Germany",
-  email: "hello@serdarbakirtas.com",
+  email: "serdarbakirtas@pm.me",
   url: "https://serdarbakirtas.com",
   description:
     "Senior Apple Platform Engineer building privacy-first iOS, iPadOS and macOS applications with Swift, CoreML, Computer Vision and AI-enabled experiences.",
   social: {
     github: "https://github.com/serdarbakirtas",
     linkedin: "https://www.linkedin.com/in/serdarbakirtas",
-    email: "mailto:hello@serdarbakirtas.com",
+    email: "mailto:serdarbakirtas@pm.me",
   },
 } as const;
 
