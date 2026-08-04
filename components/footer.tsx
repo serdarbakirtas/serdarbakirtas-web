@@ -94,7 +94,15 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {siteConfig.name}. Designed and
             built by hand.
           </p>
-          <p className="font-mono">Berlin, Germany</p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/impressum"
+              className="transition-colors hover:text-foreground"
+            >
+              Impressum
+            </Link>
+            <p className="font-mono">Berlin, Germany</p>
+          </div>
         </div>
       </Container>
     </footer>
