@@ -32,9 +32,9 @@ export default function ImpressumPage() {
               <p className="mt-3">
                 Serdar Bakirtas
                 <br />
-                [Straße und Hausnummer]
+                IlmenauerStr.
                 <br />
-                [PLZ und Ort]
+                16515 Oranienburg
                 <br />
                 Deutschland
               </p>
@@ -45,9 +45,9 @@ export default function ImpressumPage() {
                 Kontakt
               </h2>
               <p className="mt-3">
-                Telefon: [Telefonnummer]
+                Telefon: +4917632642435
                 <br />
-                E-Mail: hello@serdarbakirtas.com
+                E-Mail: serdarbakirtas@pm.me
               </p>
             </section>
 
@@ -58,9 +58,9 @@ export default function ImpressumPage() {
               <p className="mt-3">
                 Serdar Bakirtas
                 <br />
-                [Straße und Hausnummer]
+                IlmenauerStr.
                 <br />
-                [PLZ und Ort]
+                16515 Oranienburg
               </p>
             </section>
 
