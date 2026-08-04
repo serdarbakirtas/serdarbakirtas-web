@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -11,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScreenshotPlaceholder } from "@/components/screenshot-placeholder";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/lib/data/projects";
+import { getProjectCoverImage } from "@/lib/project-image";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -49,6 +51,8 @@ export default async function ProjectPage({
     .filter((p) => p.slug !== project.slug)
     .slice(0, 3);
 
+  const coverImage = getProjectCoverImage(project.slug);
+
   return (
     <>
       <Container className="pb-10 pt-32 md:pt-40">
@@ -83,7 +87,22 @@ export default async function ProjectPage({
 
       <Container>
         <Reveal>
-          <ScreenshotPlaceholder label={`${project.title} — screenshot preview`} />
+          {coverImage ? (
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border">
+              <Image
+                src={coverImage}
+                alt={`${project.title} — screenshot`}
+                fill
+                unoptimized
+                className="object-cover"
+                priority
+              />
+            </div>
+          ) : (
+            <ScreenshotPlaceholder
+              label={`${project.title} — screenshot preview`}
+            />
+          )}
         </Reveal>
       </Container>
 
