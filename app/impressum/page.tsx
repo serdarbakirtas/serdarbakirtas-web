@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Container } from "@/components/container";
 import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
-import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
   title: "Impressum",
@@ -18,13 +17,7 @@ export default function ImpressumPage() {
 
       <Section className="pt-0">
         <Container className="max-w-2xl">
-          <Reveal className="rounded-2xl border border-dashed border-accent/40 bg-accent/5 p-5 text-sm text-muted-foreground">
-            Platzhalter — vor Veröffentlichung mit den echten, ladungsfähigen
-            Angaben ersetzen. Ein Impressum ist gemäß § 5 DDG nur mit
-            vollständigen und zutreffenden Angaben rechtsgültig.
-          </Reveal>
-
-          <div className="mt-10 space-y-10 text-[15px] leading-relaxed text-muted-foreground">
+          <div className="space-y-10 text-[15px] leading-relaxed text-muted-foreground">
             <section>
               <h2 className="text-base font-semibold text-foreground">
                 Angaben gemäß § 5 DDG
