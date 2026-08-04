@@ -1,0 +1,38 @@
+---
+title: "Integrating CoreML Into Production Apps"
+date: "2026-03-14"
+excerpt: "What changes between a working .mlmodel file and a model your users can actually rely on — versioning, thermal budgets, and translating a data scientist's assumptions into Swift."
+tags: ["CoreML", "AI", "iOS"]
+---
+
+There's a gap between "the model works in a notebook" and "the model works reliably on a three-year-old iPhone in a doctor's office with one bar of signal." Closing that gap is most of what CoreML integration work actually is, and it's rarely covered in the getting-started guides.
+
+## Translating the research team's assumptions
+
+Models don't arrive from a research team as clean specifications — they arrive with implicit assumptions baked into the training pipeline: exact normalization ranges, color space expectations, the precise resize-and-crop order used during preprocessing. Get any of these subtly wrong in Swift and the model still runs, still returns confident-looking numbers, and is quietly wrong in a way that's brutal to debug.
+
+The discipline that's saved me repeatedly: build a small harness that runs the same input image through the Swift preprocessing pipeline and the original Python pipeline, and diffs the tensors before they ever hit the model. Catching a normalization mismatch there takes ten minutes. Catching it from a support ticket about weird predictions takes a week.
+
+## Multiple models means a versioning problem
+
+Real products rarely ship one model — they ship several, updated on independent schedules as the science improves. That turns integration into a versioning and rollout problem as much as a machine learning one. I treat each model as a versioned dependency with its own compatibility contract: input shape, expected preprocessing, and output schema all pinned together, so an app build always knows exactly which model version it was built and tested against.
+
+This matters most when a model update changes output shape or confidence calibration — the kind of change that's invisible in a diff review but very visible in production if the app's downstream logic assumed the old distribution.
+
+## Budgeting for thermal and battery, not just accuracy
+
+A model that's 2% more accurate but doubles inference time and heats the device up isn't automatically a win — especially for a feature used repeatedly in one sitting, like real-time image capture. I profile CoreML models with Instruments' Core ML template early, looking specifically at compute unit selection (`.all` isn't always the right answer), memory footprint, and sustained performance over repeated calls rather than a single cold inference.
+
+For latency-sensitive pipelines, quantization and choosing the right compute units deliberately — rather than trusting the default — has been the highest-leverage lever, often larger than any model architecture change.
+
+## Testing a probabilistic component
+
+CoreML models don't fit neatly into an XCTest assertion the way deterministic code does. What's worked for me is testing the pipeline around the model deterministically — preprocessing produces exactly the expected tensor, postprocessing correctly interprets a fixed set of known model outputs — while treating model accuracy itself as something validated against a held-out dataset outside the app's test suite, with regression thresholds tracked over time.
+
+That separation keeps CI meaningful: a broken preprocessing step fails a fast, deterministic test, while accuracy drift is caught by a slower, dedicated evaluation process before a model version ever gets bundled into a release.
+
+## Shipping models is a release process, not a feature flag
+
+Because a bad model update is a much scarier failure mode than a bad UI update — it can silently degrade something users are trusting the app to get right — I treat model rollouts with the same seriousness as a database migration: staged rollout, a clear rollback path to the previous bundled model version, and monitoring that would actually surface a regression in production behavior, not just a crash rate.
+
+CoreML makes the mechanics of running a model on-device genuinely simple. The engineering work worth taking seriously is everything around it — the pipeline, the versioning, the testing strategy, and the discipline to treat a model update with the same care as any other production release.

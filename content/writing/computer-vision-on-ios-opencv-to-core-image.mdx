@@ -1,0 +1,36 @@
+---
+title: "Computer Vision on iOS: From OpenCV to Core Image"
+date: "2026-01-20"
+excerpt: "When to reach for OpenCV, when Core Image and Vision already do the job, and how I structure a preprocessing pipeline that a CoreML model can actually trust."
+tags: ["Computer Vision", "OpenCV", "iOS"]
+---
+
+Every computer vision feature I've shipped on iOS — from industrial defect annotation to dermatological image capture — starts with the same unglamorous question: what does the model actually need to see, and how do I get raw camera output into that shape reliably, in real time, on a phone.
+
+## Core Image and Vision cover more than people assume
+
+Apple's own frameworks have gotten quietly excellent. Vision handles a huge amount of standard computer vision work — face and body detection, text recognition, saliency, image alignment — with hardware-accelerated performance you'd have to work hard to beat with a custom pipeline. Core Image gives you a GPU-backed, composable filter pipeline for color transforms, geometric corrections, and format conversions.
+
+My default is to reach for Vision and Core Image first, and only bring in OpenCV when I need something they genuinely don't offer — custom filter kernels, specific classical CV algorithms not exposed by Apple's frameworks, or parity with an existing OpenCV-based pipeline from a research team that isn't practical to reimplement from scratch.
+
+## Where OpenCV still earns its place
+
+For Magnosco's imaging pipeline, OpenCV was the right call because the preprocessing logic needed to match, algorithm-for-algorithm, what the research team had already validated in Python — reimplementing that from a description rather than a shared implementation would have introduced exactly the kind of subtle numerical drift that erodes a model's accuracy. In cases like that, bridging OpenCV's C++ core into Swift via a thin Objective-C++ wrapper is worth the added build complexity.
+
+The lesson generalizes: choose OpenCV when you need to guarantee numerical parity with a non-Apple pipeline, or need an algorithm Apple's frameworks simply don't expose. Don't reach for it out of habit when Vision or Core Image already solve the problem with less integration overhead.
+
+## Structuring the pipeline for testability
+
+Whichever framework does the work, I structure image preprocessing as a series of small, named, independently testable steps — normalize color space, correct orientation, crop to region of interest, resize to model input dimensions — rather than one large function. Each step takes and returns a well-defined image representation, which makes it possible to unit test intermediate output against known-good reference images instead of only testing the pipeline end-to-end.
+
+This structure paid off directly during Magnosco's device integration work: when captures from a new firmware version started producing slightly different raw output, being able to isolate exactly which preprocessing step's assumptions had broken took an hour instead of a multi-day investigation.
+
+## Real-time constraints change the shape of the problem
+
+Feature extraction that's fast enough for an offline batch job is often too slow for a live camera feed. For real-time pipelines — annotating equipment on a factory floor, guiding a diagnostic capture — I profile every stage against a per-frame budget from the start, not after the feature feels sluggish. Downsampling earlier in the pipeline, moving work to the GPU via Core Image where possible, and avoiding unnecessary color space conversions have consistently been the highest-leverage optimizations, ahead of algorithmic cleverness.
+
+## The output is a contract with the model
+
+The most common bug I've debugged in vision pipelines isn't in the model — it's a mismatch between what preprocessing produces and what the model was trained to expect: wrong normalization, an unexpected color channel order, a crop that clips information the model relies on. I treat the preprocessing pipeline's output format as a versioned contract with the model, documented and tested explicitly, so a change on either side surfaces as a clear, attributable failure rather than a quietly degraded prediction.
+
+Computer vision on iOS today rarely means choosing one framework and living with it. It means knowing Apple's frameworks well enough to use them by default, and knowing exactly when a research pipeline's requirements justify reaching past them.

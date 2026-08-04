@@ -1,0 +1,34 @@
+---
+title: "Building Privacy-First Apps"
+date: "2025-11-05"
+excerpt: "Privacy-first isn't a policy page — it's a set of architecture decisions made before a single screen is designed. Here's how I actually apply it."
+tags: ["Privacy", "Architecture", "Swift"]
+---
+
+"Privacy-first" gets used loosely enough that it's worth being precise about what it actually means in an architecture, not just a marketing page. For me it means one operating rule: data you never collect can never leak, so the default for every piece of information is that it stays on the device unless there's a specific, defensible reason for it to leave.
+
+## Start from data flow, not features
+
+Before I design a feature, I map where its data lives and where it needs to travel — device only, encrypted sync between a user's own devices, or a third-party server. That map determines the architecture more than the UI does. A feature that could work entirely on-device but defaults to a server round-trip out of habit is a missed opportunity, not a neutral choice.
+
+For Momena, this means SwiftData handles local persistence for anything that doesn't strictly need to leave the device, and anything that syncs across a user's devices is encrypted client-side first — the sync layer never has access to plaintext, by construction rather than by policy.
+
+## Encryption that doesn't depend on trusting yourself later
+
+The uncomfortable truth about privacy promises is that they're only as good as the architecture enforcing them. "We don't look at your data" is a policy. "We can't look at your data because we never had the key" is an architecture decision. I design encryption so that the second statement is true wherever possible — keys derived and held client-side, servers that store ciphertext they have no path to decrypt.
+
+This is more work than trusting a server-side access control list, and it's worth it, because it means the promise holds even against a future mistake, a compromised admin account, or a legal request the product never anticipated.
+
+## Permissions are a promise, not a gate to get past
+
+Every permission prompt — camera, photos, notifications — is a moment where a user is trusting you with something specific. I write the copy around each request to explain exactly what it's for, request it at the moment it's actually needed rather than during onboarding, and design the feature to degrade gracefully if it's denied rather than nagging. A permission granted under vague pretenses is trust extended on false terms, and users notice eventually.
+
+## Minimize collection before you optimize storage
+
+It's tempting to solve privacy concerns at the storage layer — encrypt everything, lock it down well — while still collecting more than a feature needs. I push back on this by asking, for every field a feature wants to persist or transmit, whether the feature actually breaks without it. Analytics is the most common offender: it's easy to instrument broadly "in case it's useful later" and much harder to justify each field's existence individually. I do the harder thing.
+
+## Privacy-first slows some things down, on purpose
+
+Building this way is genuinely slower in places — you can't reach for the easiest server-side implementation, and encrypted sync is harder to debug than plaintext sync. I've made my peace with that trade because the alternative is a product whose privacy claims don't survive contact with its own architecture. Users increasingly can tell the difference between a privacy policy and a product that was actually built this way, even if they couldn't articulate the architectural reasons why.
+
+The test I hold every feature to is simple: if this app's entire backend were compromised tomorrow, what would an attacker actually get? For a privacy-first app, the honest answer should be disappointing to them.

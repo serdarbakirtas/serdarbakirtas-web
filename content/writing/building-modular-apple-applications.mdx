@@ -1,0 +1,36 @@
+---
+title: "Building Modular Apple Applications"
+date: "2025-09-02"
+excerpt: "How I use local Swift packages to turn a slow, tangled app target into something a growing team can actually move fast inside."
+tags: ["Architecture", "Swift Package Manager"]
+---
+
+The single highest-leverage architectural change I've made on more than one large codebase is the same one: break the monolithic app target into local Swift packages. It sounds like a build-system detail. In practice it reshapes how a team works.
+
+## The problem modularity actually solves
+
+A single app target with everything in it has no enforced boundaries. Any file can import any other file, so over time every part of the app quietly depends on every other part, whether it needs to or not. This shows up as build times that creep upward, merge conflicts that cluster around the same "core" files, and a growing fear of touching shared code because nobody's sure what else it affects.
+
+Local Swift packages fix this by making dependencies explicit and enforced by the compiler, not by convention or code review vigilance. A feature package that doesn't import the networking package literally cannot call into it. That constraint, once in place, is worth more than any amount of architecture documentation.
+
+## Draw boundaries around ownership, not just layers
+
+The instinct is to split by technical layer — a UI package, a networking package, a models package. That helps, but the split that's paid off most for me is organizing packages around feature ownership: a package per feature domain, with foundational packages beneath them for genuinely shared concerns like networking primitives and design-system components.
+
+When package boundaries match team boundaries, modularity sticks. Each team has a package they're accountable for, with its own tests and its own release cadence within the app. When boundaries only reflect technical layers, packages tend to become a second monolith with extra ceremony.
+
+## Migrating incrementally without freezing feature work
+
+Retrofitting modularity onto an existing large app target is a migration, not a rewrite, and I treat it that way. The pattern that's worked repeatedly: pick one self-contained feature, extract it into a package with its dependencies made explicit, fix what breaks, ship it, and repeat. It's slower than a big-bang restructure, and it's the only version of this migration I've seen survive contact with a team that still has to ship features every sprint.
+
+The build-time win compounds as you go — each extracted package is something Swift's build system can cache and skip rebuilding when it hasn't changed, so incremental builds get faster with every package pulled out, well before the migration is complete.
+
+## What good package boundaries look like in practice
+
+A package earns its existence if it has a clear, nameable responsibility, a small and intentional public API, and dependencies that only point toward genuinely shared foundations. If a package's public interface is nearly as large as its internals, or if two packages import each other, the boundary is probably drawn in the wrong place.
+
+I also keep an explicit dependency graph in mind — foundational packages (networking, persistence, design system) should never depend on feature packages. Getting this backwards is the most common way modular architectures decay back into a tangle over time.
+
+## Modularity is a team tool as much as a technical one
+
+The metric I care about most after a modularization effort isn't build time, though that matters. It's whether a new engineer can be handed a package, understand its boundaries in an afternoon, and start contributing without needing a tour of the entire codebase first. That's the real payoff — a codebase that scales with the size of the team working in it, not just the size of the app.

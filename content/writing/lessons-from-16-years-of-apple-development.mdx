@@ -1,0 +1,40 @@
+---
+title: "Lessons from 16 Years of Apple Development"
+date: "2026-07-10"
+excerpt: "What actually changed my mind about building software, from Interface Builder to SwiftData — and what stayed constant the whole way through."
+tags: ["Career", "Reflection", "Apple"]
+---
+
+I wrote my first line of Objective-C in a small agency in Istanbul, on a codebase held together by nib files and hope. Sixteen years, several frameworks, and one founded company later, most of the tools I use daily didn't exist when I started. The instincts that make code good, though, have barely moved.
+
+## The tools change faster than the taste
+
+Objective-C to Swift. UIKit to SwiftUI. Core Data to SwiftData. Each transition felt seismic while it was happening and looks, in hindsight, like a smoother continuation of the same idea: make declaring intent cheaper than implementing mechanism. If you're early in your career and anxious about which framework to bet on, my honest advice is to worry less about that and more about developing taste — the ability to look at two working solutions and know which one a team will still be glad to maintain in three years.
+
+That taste is portable across every framework shift I've lived through. It's also the thing interviews and tutorials teach the least.
+
+## Interaction design was not a detour
+
+I started as an interaction designer, not an engineer, and for years I treated that as a slightly awkward footnote in my bio. It wasn't a footnote. It's the reason I instinctively care about the fifty milliseconds after a tap, the exact wording of an error state, and whether a loading indicator lies about progress. Engineers who've never had to defend a design decision to a client tend to underrate how much craft lives in details that never show up in a pull request diff.
+
+If you're an engineer who's curious about design, I'd encourage you to actually sit with it — not a weekend Figma tutorial, but real practice defending choices to people who don't care about your architecture. It changes what you notice.
+
+## Complexity is a choice, usually made under pressure
+
+Every genuinely bad codebase I've inherited wasn't bad because someone was a poor engineer. It was bad because complexity accumulated under deadline pressure, one reasonable-sounding shortcut at a time, until the shortcuts outnumbered the plan. The fix isn't heroics — it's noticing early, and having the organizational safety to say "this needs an afternoon of cleanup before we build on it."
+
+The most senior thing I do most weeks isn't writing clever code. It's saying no to complexity that doesn't need to exist yet, on behalf of an engineer six months from now who isn't in the room.
+
+## Privacy stopped being a checkbox for me
+
+For a long time I treated data handling as compliance work — something legal cared about more than engineering. That changed when I started building for a medical product and, separately, when I founded Momena. Once you sit with what it actually means for a stranger to trust your software with something private, "we're compliant" starts to feel like a very low bar. Privacy-by-default architecture — data that never leaves the device unless it has to, encryption that isn't an afterthought — is harder to build and worth it every time.
+
+## Shipping alone taught me more than any team did
+
+Building Momena by myself — design, engineering, App Store operations, support — was humbling in a way that sixteen years on teams hadn't prepared me for. There's nowhere to hide when you're the only one who can fix a crash, write the release notes, and answer the support email about it. It made me faster, but more importantly it made me more honest about which parts of a product actually matter to a user, because I no longer had the bandwidth to build anything else.
+
+## What hasn't changed
+
+The engineers I respected sixteen years ago and the ones I respect now share the same habits: they read the framework release notes instead of waiting for a blog post to summarize them, they profile before they optimize, they write the boring test, and they're suspicious of their own cleverness. None of that is going out of style, no matter what ships at the next WWDC.
+
+If there's one thing I'd tell the engineer I was in 2009: the frameworks are a means, not the point. Build the taste, and the tools will keep changing under you without ever taking it away.

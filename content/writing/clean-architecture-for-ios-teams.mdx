@@ -1,0 +1,34 @@
+---
+title: "Clean Architecture for iOS Teams"
+date: "2025-06-18"
+excerpt: "Clean Architecture is easy to over-engineer on a small iOS app. Here's the pragmatic version I actually use, and when I skip it entirely."
+tags: ["Architecture", "Clean Architecture"]
+---
+
+Clean Architecture has a reputation, deserved in some codebases I've inherited, for producing more ceremony than value — five layers and a dozen protocols to fetch a list of items. Used with judgment, though, the underlying idea is one of the most useful I know: keep business logic ignorant of frameworks, so the framework can change without the logic having to.
+
+## The one rule that matters
+
+Strip away the diagrams and Clean Architecture comes down to a single dependency rule: inner layers — your core business logic — should never import or depend on outer layers like UIKit, SwiftUI, or a specific networking library. Outer layers depend inward, never the reverse. Everything else — the exact names of the layers, whether you call something a "use case" or an "interactor" — is implementation detail worth adapting to your team's taste.
+
+That one rule is what makes business logic testable without spinning up a view hierarchy, and portable if the UI framework underneath it changes — which, if you've lived through a UIKit-to-SwiftUI migration, is not a hypothetical concern.
+
+## Where I apply it fully
+
+For products with real business logic — subscription entitlement rules, encryption and sync logic, medical device data handling — I apply the pattern deliberately: domain models and use cases with zero import of SwiftUI or networking types, repository protocols defined in the domain layer and implemented in an outer layer, and view models that translate domain state into what a view needs without leaking framework types back into the domain.
+
+The test that validates this in practice: can I write a meaningful unit test for a use case without touching XCTest's UI testing APIs or mocking a single networking call by hand? If the domain layer is properly isolated, the answer is yes, and those tests run in milliseconds.
+
+## Where I deliberately skip it
+
+Not every screen deserves this treatment, and pretending otherwise is how Clean Architecture earns its bad reputation. A settings screen that reads and writes a handful of UserDefaults values doesn't need a use case, a repository protocol, and a dedicated view model — a small, direct SwiftUI view backed by `@AppStorage` is more honest about its own complexity and easier for the next person to read.
+
+My rule of thumb: apply the full pattern where business logic has real complexity, real testing value, or needs to outlive a specific UI framework. Skip it where a screen is genuinely just presentation over a trivial data source, and let it stay simple.
+
+## Keeping the boundary honest over time
+
+The dependency rule erodes quietly if nothing enforces it — a "quick" SwiftUI import in a use case file, added under deadline pressure, that nobody removes. Where the codebase supports it, I enforce the boundary structurally by putting domain logic in its own Swift package with SwiftUI and networking libraries simply absent from its dependency list, so a violation is a compiler error, not a code review nit someone has to remember to flag.
+
+## The payoff shows up during change, not on day one
+
+Clean Architecture's cost is mostly upfront — more files, more indirection, more to explain to someone new to the codebase. Its payoff shows up later, during exactly the kind of change that's otherwise expensive: swapping a networking library, migrating a UI layer, or writing a thorough test suite for logic that a compliance review suddenly needs verified. Applied with judgment rather than dogma, it's one of the best trades available for the parts of an app that are actually going to need it.

@@ -1,0 +1,34 @@
+---
+title: "Swift Concurrency in Practice"
+date: "2025-03-27"
+excerpt: "Moving a production codebase to async/await and actors — where it genuinely simplified things, and where the migration bit back."
+tags: ["Swift Concurrency", "Swift"]
+---
+
+Swift Concurrency promised to replace a decade of completion handlers and manual queue juggling with something the compiler could actually reason about. Having migrated real production code toward it, the promise mostly holds — with a few sharp edges worth knowing about before you commit a whole codebase to it.
+
+## What actually got simpler
+
+Completion-handler pyramids — the kind where three async operations chain into a nest of closures with easy-to-miss error paths — are the clearest win. Rewritten with async/await, the same logic reads top to bottom, error handling is a single `do/catch` instead of three separate closure branches, and it's dramatically harder to accidentally forget to call a completion handler on one exit path, which was a recurring, hard-to-spot bug class in the old style.
+
+Structured concurrency's cancellation propagation is the underrated part. A `Task` that's cancelled propagates that cancellation down through everything it awaits, without every intermediate function needing to manually check and forward a cancellation flag. For anything doing a chain of network or disk operations that might need to abort partway through, this alone justified the migration.
+
+## Actors solved a specific, painful class of bug
+
+Data races in code that mutated shared mutable state from multiple queues were some of the worst bugs I've debugged — non-deterministic, hard to reproduce, and often invisible until a very specific timing window in production. Actors, by isolating mutable state and enforcing access through async boundaries, moved a meaningful category of these bugs from "found by a user during a crash report" to "caught by the compiler before the code ever ran."
+
+That said, actor isolation surfaces real design questions you were previously able to avoid — particularly around what belongs on the `MainActor` and what doesn't, which leads to the sharpest edge in the migration.
+
+## Where the migration actually bit back
+
+Retrofitting Swift Concurrency onto an existing UIKit or early-SwiftUI codebase means confronting `MainActor` isolation everywhere UI state is touched, and older code frequently touched UI state from places that were never audited for thread-safety because completion handlers made it easy not to think about it. The compiler now forces that reckoning, which is a feature — but it means a migration surfaces latent threading bugs as build errors, not gradually.
+
+My approach was to migrate leaf-level async functions first — code with few callers, easy to convert and verify in isolation — and defer anything with wide `MainActor` implications until the surrounding architecture could absorb it deliberately, rather than trying to convert an entire view controller hierarchy in one pass.
+
+## Interop with legacy completion-handler APIs
+
+Bridging older, completion-handler-based APIs — your own or a third-party SDK's — into async/await via `withCheckedContinuation` is straightforward for the common case and genuinely easy to get subtly wrong for the uncommon one: a completion handler that can fire more than once, or not at all under some error path, will violate the continuation's contract and crash or hang. I treat every continuation wrapper as code that deserves its own focused test, not a one-line afterthought.
+
+## The migration is worth sequencing deliberately
+
+I don't recommend converting a large codebase to Swift Concurrency in one sweep. The pattern that's worked: convert new code fully from day one, migrate existing code opportunistically when you're already touching it for a feature or bug fix, and reserve dedicated migration time for the genuinely gnarly `MainActor` boundary cases rather than trying to force them alongside unrelated feature work. Given room to happen incrementally, Swift Concurrency earns its reputation. Forced all at once under deadline pressure, it's a good way to trade one category of bugs for a rushed introduction of another.

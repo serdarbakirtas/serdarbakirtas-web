@@ -1,0 +1,32 @@
+---
+title: "Modern SwiftUI Architecture Patterns"
+date: "2025-01-15"
+excerpt: "SwiftUI's opinions about state and data flow are stronger than UIKit's ever were. Fighting them is the most common architecture mistake I still see."
+tags: ["SwiftUI", "Architecture"]
+---
+
+Most SwiftUI architecture problems I've been asked to untangle share a root cause: code written with a UIKit mental model, wearing SwiftUI syntax. SwiftUI has genuine opinions about where state lives and how data flows, and the codebases that fight those opinions pay for it in ways that compound over time.
+
+## Let state ownership follow SwiftUI's model, not habit
+
+SwiftUI's property wrappers — `@State`, `@Binding`, `@Observable`, `@Environment` — aren't interchangeable conveniences; each encodes a specific claim about who owns a piece of state and who's just observing it. The most common mistake I see is defaulting to a single large `@Observable` view model per screen and routing everything through it, recreating a MVVM-on-UIKit pattern that ignores the more granular ownership tools SwiftUI actually offers.
+
+My default now: truly local, view-only state stays `@State` in the view itself. State a parent needs to own and a child needs to mutate is `@Binding`. State shared across an entire feature or subtree lives in an `@Observable` model injected via `@Environment`. Getting this ownership question right up front avoids the two failure modes I see most — a god view model that knows about everything, or state duplicated across views that quietly drifts out of sync.
+
+## Views should describe, not decide
+
+SwiftUI views are meant to be a pure function of state — describing what the UI looks like for a given state, not deciding what that state should be. When I see business logic, formatting decisions, or side effects living directly in a view body, it's usually because the view is doing a view model's job. I keep views focused on layout and composition, and push decisions — what text to show for a given state, whether an action is currently allowed — into the model layer, which also makes that logic testable without instantiating a view at all.
+
+## Navigation deserves its own deliberate pattern
+
+Early SwiftUI navigation APIs pushed people toward tightly coupling navigation state to individual views, which becomes painful fast in any app with more than a couple of screens. I model navigation state explicitly — typically a `NavigationPath` or an enum-based router owned at a coordinating level — so that "where the user currently is" is a piece of state you can inspect, test, and manipulate programmatically, rather than something implicit in which views happen to be on screen.
+
+This pays off directly for deep linking and for restoring navigation state after a backgrounding — both of which are painful to retrofit onto a codebase where navigation was never modeled as data.
+
+## Performance is usually a state-scoping problem
+
+SwiftUI's diffing is efficient, but only if state changes are scoped to the smallest view that actually needs to redraw. The most common performance issue I debug isn't SwiftUI being slow — it's a large `@Observable` object whose every property change re-evaluates a wide swath of the view tree that only cared about one field. Splitting large models into smaller, more targeted observable pieces, and being deliberate about what a given view actually reads, resolves the majority of SwiftUI performance complaints I've investigated, well before reaching for `EquatableView` or manual diffing tricks.
+
+## Treat SwiftUI's opinions as the architecture, not an obstacle to one
+
+The teams that struggle most with SwiftUI architecture are usually trying to import a pattern that made sense for UIKit's imperative, delegate-heavy model wholesale. The teams that move fastest are the ones who took the time to understand what SwiftUI is actually suggesting — declarative state ownership, unidirectional data flow, composition over inheritance — and built their own conventions as a specific, deliberate instance of that model, rather than around it.

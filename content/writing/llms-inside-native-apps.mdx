@@ -1,0 +1,36 @@
+---
+title: "LLMs Inside Native Apps"
+date: "2026-05-22"
+excerpt: "Bringing language models into a privacy-first Swift app without turning it into a chatbot wrapper — scoped prompts, honest UI, and knowing what to keep on-device."
+tags: ["AI", "LLM", "Swift"]
+---
+
+Adding an LLM-powered feature to a native app is easy. Adding one that respects the same privacy and reliability bar as the rest of your product is a different, much more interesting problem. Here's what I've learned building LLM features into Momena and thinking through where they belong in a privacy-first Apple app.
+
+## Start from the task, not the model
+
+The failure mode I see most often is starting with "we should add AI" and working backwards to a feature. That produces a chat box bolted onto an app that never needed one. I start from a specific, well-understood task — summarizing a note, suggesting a category, drafting a reply — and only then ask whether a language model is the right tool for that narrow job.
+
+Scoping the task narrowly does two things: it makes the feature genuinely useful instead of novel, and it makes the privacy story tractable. A prompt built for one specific task is a prompt you can actually reason about — you know exactly what data goes into it, because you wrote the template yourself.
+
+## On-device first, cloud when it earns its place
+
+Apple's on-device foundation models changed the calculus for a lot of features that used to require a network call. For anything that doesn't need frontier-model reasoning — classification, light summarization, structured extraction — on-device inference means no data ever leaves the phone, no network dependency, and no per-request cost. That's a meaningful upgrade for a privacy-first product, not just a cost optimization.
+
+When a task genuinely needs a larger model, I treat sending data off-device as a decision that deserves the same scrutiny as any other privacy-sensitive network call: minimal payload, no retained history server-side, and UI copy that tells the user honestly what's being sent and why — not a vague "AI is thinking" spinner hiding the details.
+
+## Prompts are product surface, not implementation detail
+
+Prompt templates end up encoding real product decisions — tone, scope, what the model is and isn't allowed to infer about the user. I keep them in version control like any other product logic, reviewed the same way, because a prompt change can alter behavior as meaningfully as a UI change can.
+
+I also design every LLM feature assuming the model will occasionally be wrong or evasive. That means constrained output formats where possible, sensible fallbacks when parsing fails, and never putting a model-generated action behind a destructive or irreversible button without a confirmation step a human actually reads.
+
+## Latency and failure are UX problems, not edge cases
+
+Language model calls are slow and occasionally fail in ways a REST endpoint rarely does — timeouts, malformed output, rate limits. I design the surrounding UI to make that feel unremarkable: optimistic states that degrade gracefully, retry affordances that don't nag, and a design that never implies the feature failed when it just needs a second attempt.
+
+## The honest pitch to skeptical users
+
+Momena's users chose it because it doesn't behave like most "smart" apps. Every LLM feature I've shipped had to survive the same question I imagine a skeptical, privacy-conscious user asking: *what exactly did you just send, and where did it go?* If I can't answer that plainly in the feature's own UI, the feature isn't ready — no matter how good the demo looks.
+
+That constraint has made every AI feature I've shipped smaller in scope and, I think, more trustworthy in practice. Bringing LLMs into a native app well isn't about how much of the model's capability you expose — it's about how honestly you can account for what it's doing on the user's behalf.
