@@ -21,18 +21,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.role}`,
-    template: `%s — ${siteConfig.name}`,
+    default: siteConfig.seoTitle,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
     "Serdar Bakirtas",
     "Apple Platform Engineer",
     "iOS Engineer",
+    "iPadOS Developer",
     "macOS Developer",
     "SwiftUI",
     "CoreML",
     "Computer Vision",
+    "AI-enabled products",
     "Privacy-first apps",
     "Berlin",
   ],
@@ -48,13 +50,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: siteConfig.seoTitle,
     description: siteConfig.description,
     siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: siteConfig.seoTitle,
     description: siteConfig.description,
   },
   robots: {

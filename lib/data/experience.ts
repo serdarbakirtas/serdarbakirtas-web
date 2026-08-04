@@ -20,16 +20,18 @@ export const experience: ExperienceEntry[] = [
     start: "2023",
     end: "Present",
     overview:
-      "Magnosco builds computer-vision-assisted diagnostic tools for skin cancer detection, working closely with dermatologists and imaging scientists. I own the iOS application that turns a research-grade imaging device into a product a clinician can trust — from the Wi-Fi connection to the device, through image preprocessing, to on-device inference and secure transmission of results.",
+      "Magnosco builds computer-vision-assisted diagnostic tools for skin cancer detection, working closely with dermatologists and imaging scientists. My role is bringing their AI research into a production Apple application — not training the models, but turning a research-grade imaging device into a product a clinician can trust, from the Wi-Fi connection through image preprocessing, on-device inference, and secure transmission of results.",
     challenges: [
       "Integrating a dermatological imaging device over a device-hosted Wi-Fi network with no internet path, handling reconnection and firmware drift gracefully.",
       "Deploying and version-managing multiple CoreML models on-device with strict latency and thermal budgets.",
       "Building an OpenCV-based preprocessing pipeline that turns raw sensor output into consistent, model-ready imagery.",
-      "Securing every request between the app and backend with mutual TLS, including on-device certificate provisioning and rotation.",
+      "Redesigning a memory-heavy computer vision workflow on iPad with actor-based concurrency, an intelligent caching strategy, and conditional model execution — reducing peak memory from roughly 4GB to 1.2GB and eliminating the crashes that came with it.",
+      "Securing every request between the app and backend with mutual TLS, including on-device certificate lifecycle management.",
     ],
     technologies: [
       "Swift",
       "SwiftUI",
+      "Swift Concurrency (Actors)",
       "CoreML",
       "OpenCV",
       "mTLS",
@@ -38,6 +40,7 @@ export const experience: ExperienceEntry[] = [
     ],
     impact: [
       "Translated PyTorch model logic into efficient, production-ready Swift implementations used in a clinical setting.",
+      "Cut peak memory usage on iPad from roughly 4GB to 1.2GB and eliminated device crashes through actor-based concurrency and intelligent caching.",
       "Reduced end-to-end capture-to-result time by streamlining the imaging and preprocessing pipeline.",
       "Established the app's networking and device-pairing layer as the reliability foundation the rest of the product builds on.",
     ],

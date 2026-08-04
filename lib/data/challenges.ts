@@ -3,6 +3,7 @@ export type Challenge = {
   context: string;
   description: string;
   tags: string[];
+  impact?: string;
 };
 
 export const challenges: Challenge[] = [
@@ -19,6 +20,15 @@ export const challenges: Challenge[] = [
     description:
       "Shipped and version-managed several CoreML models on-device, each with different input pipelines and performance envelopes, while keeping app size, thermal impact, and inference latency within limits acceptable for clinical use.",
     tags: ["CoreML", "On-device ML", "Performance"],
+  },
+  {
+    title: "Large-scale on-device AI optimization",
+    context: "Magnosco",
+    description:
+      "Redesigned the execution flow of a memory-heavy computer vision workflow on iPad — introducing actor-based concurrency to coordinate pipeline stages safely, an intelligent caching strategy to avoid recomputing unchanged inference steps, and conditional model execution so expensive models only run when their output is actually needed.",
+    tags: ["Swift Concurrency", "Actors", "CoreML", "Performance"],
+    impact:
+      "Reduced peak memory usage from roughly 4GB to 1.2GB and eliminated the device crashes that came with it.",
   },
   {
     title: "Migrating Objective-C to Swift",
@@ -42,10 +52,10 @@ export const challenges: Challenge[] = [
     tags: ["Encryption", "Cloud Storage", "Security"],
   },
   {
-    title: "Designing privacy-first applications",
-    context: "Momena · Nord Security",
+    title: "Privacy-first consumer application, owned end to end",
+    context: "Momena",
     description:
-      "Designed and shipped consumer products where privacy was the starting constraint, not a compliance checkbox — minimizing data collection, keeping processing on-device, and writing plain-language explanations for every permission requested.",
+      "Took Momena from concept to the App Store as a team of one — product design, architecture, development, security, and release — where privacy was the starting constraint, not a compliance checkbox: minimal data collection, on-device processing by default, and plain-language explanations for every permission requested.",
     tags: ["Privacy", "Product Design", "SwiftData"],
   },
   {
@@ -70,10 +80,10 @@ export const challenges: Challenge[] = [
     tags: ["Medical Imaging", "CoreML", "Collaboration"],
   },
   {
-    title: "mTLS networking",
+    title: "Secure medical device communication",
     context: "Magnosco",
     description:
-      "Secured device-to-server communication for a medical product using mutual TLS, managing certificate provisioning and rotation on-device so every request was authenticated in both directions.",
+      "Designed and implemented mutual TLS between an iPad application and a medical imaging device, including full certificate lifecycle management — provisioning, rotation, and revocation on-device — so every request was authenticated in both directions, not just the client's.",
     tags: ["mTLS", "Security", "Networking"],
   },
   {

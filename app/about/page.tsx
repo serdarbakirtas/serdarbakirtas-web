@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const arc = [
   {
     stage: "Interaction Designer",
-    body: "I started my career designing interactive digital campaigns for international brands — the kind of work where every hover state, transition, and moment of feedback was scrutinized. That's where I learned that the feeling of quality lives in details most people never consciously notice.",
+    body: "I started my career designing interactive digital campaigns for international brands — the kind of work where every hover state, transition, and moment of feedback was scrutinized. That background still shapes how I work today: the animation timing I choose, the empty and error states I bother to design properly, and how naturally I collaborate with product designers instead of just implementing their files. It's where I learned that the feeling of quality lives in details most people never consciously notice.",
   },
   {
     stage: "iOS Engineer",

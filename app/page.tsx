@@ -1,10 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Download, Mail } from "lucide-react";
 
 import { Container } from "@/components/container";
 import { Section } from "@/components/section";
 import { Reveal, RevealGroup } from "@/components/reveal";
-import { Monogram } from "@/components/monogram";
 import { AmbientBackground } from "@/components/ambient-background";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { Button } from "@/components/ui/button";
@@ -59,10 +59,10 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-7 max-w-xl text-balance text-lg leading-relaxed text-muted-foreground">
-                I&apos;m Serdar — a Senior Apple Platform Engineer in Berlin.
-                I design and ship complete Apple products: from
-                architecture and computer vision to the interaction
-                details that make software feel trustworthy.
+                Senior Apple Platform Engineer with 16+ years of experience
+                building iOS, iPadOS, and macOS applications. I combine
+                engineering, product thinking, and emerging technologies to
+                create reliable, human-centered software.
               </p>
             </Reveal>
             <Reveal delay={0.18}>
@@ -113,7 +113,16 @@ export default function Home() {
           </div>
 
           <Reveal delay={0.15} className="justify-self-center lg:justify-self-end">
-            <Monogram className="aspect-[4/5] w-64 sm:w-80" />
+            <div className="relative aspect-[4/5] w-64 overflow-hidden rounded-[2rem] border border-border sm:w-80">
+              <Image
+                src="/profile.jpeg"
+                alt={siteConfig.name}
+                fill
+                unoptimized
+                priority
+                className="object-cover"
+              />
+            </div>
           </Reveal>
         </Container>
 

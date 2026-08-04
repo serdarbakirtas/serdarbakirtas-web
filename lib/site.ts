@@ -4,11 +4,13 @@ export const siteConfig = {
   role: "Senior Apple Platform Engineer",
   tagline:
     "Building privacy-first Apple products powered by modern Swift and intelligent, on-device technologies.",
+  seoTitle:
+    "Serdar Bakirtas | Senior Apple Platform Engineer | Swift, AI & Privacy-first Products",
   location: "Berlin, Germany",
   email: "hello@serdarbakirtas.com",
   url: "https://serdarbakirtas.com",
   description:
-    "Serdar Bakirtas is a Senior Apple Platform Engineer in Berlin building privacy-first iOS and macOS products — from computer vision and CoreML integration to founding and shipping Momena end-to-end.",
+    "Senior Apple Platform Engineer building privacy-first iOS, iPadOS and macOS applications with Swift, CoreML, Computer Vision and AI-enabled experiences.",
   social: {
     github: "https://github.com/serdarbakirtas",
     linkedin: "https://www.linkedin.com/in/serdarbakirtas",

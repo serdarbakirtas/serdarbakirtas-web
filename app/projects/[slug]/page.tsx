@@ -119,7 +119,7 @@ export default async function ProjectPage({
 
           <Reveal>
             <h2 className="text-xs font-medium uppercase tracking-wider text-accent">
-              Solution
+              Approach
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-foreground/90">
               {project.solution}
@@ -137,7 +137,7 @@ export default async function ProjectPage({
 
           <Reveal>
             <h2 className="text-xs font-medium uppercase tracking-wider text-accent">
-              Key decisions
+              Technical Decisions
             </h2>
             <div className="mt-6 space-y-6">
               {project.decisions.map((decision) => (
@@ -165,6 +165,20 @@ export default async function ProjectPage({
                 <li key={challenge} className="flex gap-3 text-[15px] leading-relaxed text-muted-foreground">
                   <span className="mt-2.5 size-1 shrink-0 rounded-full bg-accent" />
                   {challenge}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal>
+            <h2 className="text-xs font-medium uppercase tracking-wider text-accent">
+              Results
+            </h2>
+            <ul className="mt-4 space-y-3">
+              {project.results.map((result) => (
+                <li key={result} className="flex gap-3 text-[15px] leading-relaxed text-foreground/90">
+                  <span className="mt-2.5 size-1 shrink-0 rounded-full bg-accent" />
+                  {result}
                 </li>
               ))}
             </ul>

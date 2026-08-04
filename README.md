@@ -37,12 +37,20 @@ This produces a fully static export in `out/` (`next.config.ts` sets `output: "e
 
   Reading time, the writing index, RSS feed, and sitemap all pick it up automatically on the next build.
 
+## Resume
+
+`public/resume.pdf` is generated from [`scripts/generate-resume.mjs`](scripts/generate-resume.mjs) — a single-column, plain-text PDF (base-14 Helvetica, no tables/images/columns) built to parse cleanly in ATS systems. To update it after changing role, skills, or experience details, edit the data at the top of the script and regenerate:
+
+```bash
+pnpm resume
+```
+
+Only use standard ASCII/Latin-1 punctuation in the script's content (em dash `—`, en dash `–`, and plain hyphens are fine) — PDFKit's default fonts don't support extended Unicode like arrows (`→`) and will render them as garbled characters.
+
 ## Placeholder assets
 
 A few assets are intentionally placeholders until real ones are available — swap them in and remove the corresponding note:
 
-- **Portrait** — `components/monogram.tsx` renders an abstract "SB" monogram in place of a real photo. Swap its usage for a real `<Image src="/images/portrait.jpg" />` once available.
-- **Resume** — `public/resume.pdf` is a minimal placeholder PDF. Replace the file directly (keep the same filename) once a real resume is ready.
 - **Project screenshots** — drop a file named `cover.webp` (or `.jpg`/`.jpeg`/`.png`) into `public/images/projects/{slug}/` (slugs: `momena`, `magnosco`, `volkswagen`, `nordlocker`, `puhutv`) and it's picked up automatically on the next build — no code changes needed. Until then, `components/screenshot-placeholder.tsx` renders instead.
   - **Size**: 2400×1350px (16:9), which covers the slot's full-width desktop rendering at retina density.
   - **Format**: WebP preferred (smaller at equal quality); JPEG is fine too. Keep each file under ~400–600KB — the static export doesn't run image optimization (`images.unoptimized: true`), so whatever you add ships as-is.

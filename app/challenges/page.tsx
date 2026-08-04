@@ -39,6 +39,11 @@ export default function ChallengesPage() {
                 <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
                   {challenge.description}
                 </p>
+                {challenge.impact ? (
+                  <p className="mt-4 rounded-xl border border-accent/20 bg-accent/5 px-4 py-3 text-sm font-medium text-accent">
+                    {challenge.impact}
+                  </p>
+                ) : null}
                 <div className="mt-4 flex flex-wrap gap-2">
                   {challenge.tags.map((tag) => (
                     <Badge key={tag} variant="outline">

@@ -9,7 +9,7 @@ import { Reveal, RevealGroup } from "@/components/reveal";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
-  title: "AI & Computer Vision",
+  title: "AI & Intelligent Products",
   description:
     "How I bring computer vision and on-device AI into production Apple products — honestly scoped, not oversold.",
 };
@@ -52,6 +52,14 @@ const topics = [
     body: "Scoping language-model features narrowly around specific tasks, favoring on-device foundation models where possible, and being explicit with users about what data a prompt contains.",
   },
   {
+    title: "Prompt Architecture",
+    body: "Treating prompt templates as product surface, not implementation detail — versioned, reviewed, and designed with constrained output formats and sensible fallbacks for when a model response doesn't parse.",
+  },
+  {
+    title: "Claude API Integration",
+    body: "Wiring Claude into narrowly-scoped product features via the Messages API — structured prompts, minimal payloads, and no server-side retention of conversation history by default.",
+  },
+  {
     title: "Privacy-first AI",
     body: "Treating every AI feature's data flow with the same scrutiny as any other privacy-sensitive code path — minimal payloads, no server-side retention by default, honest UI copy.",
   },
@@ -61,7 +69,7 @@ export default function AIPage() {
   return (
     <>
       <PageHeader
-        eyebrow="AI & Computer Vision"
+        eyebrow="AI & Intelligent Products"
         title="I build AI-powered Apple products — I don't train the models."
         description="My work sits between research and production: taking a validated model or a well-scoped LLM feature and turning it into something reliable, fast, and honest about what it does with a user's data."
       />

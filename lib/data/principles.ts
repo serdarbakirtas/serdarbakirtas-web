@@ -30,6 +30,16 @@ export const principles: Principle[] = [
       "Software is read far more often than it's written. I favor modular architecture, honest naming, and tests that document intent, because the team maintaining this code in three years deserves the same care as the user opening the app today.",
   },
   {
+    title: "Great architecture enables fast shipping.",
+    description:
+      "Speed and structure aren't in tension — they compound. A codebase with clear boundaries and well-tested modules is the reason a team can ship a feature in a day instead of a sprint. I invest in architecture precisely because I want to move faster later, not slower.",
+  },
+  {
+    title: "Software should be built to last.",
+    description:
+      "I write code assuming it will outlive the framework it was written in, the team that shipped it, and my own memory of why a decision was made. That means documenting the non-obvious, avoiding fashionable dependencies with no exit plan, and treating deletion as a valid, healthy outcome of a design review.",
+  },
+  {
     title: "Products over technologies.",
     description:
       "Swift, CoreML, and SwiftData are tools in service of an outcome — not the outcome itself. I choose technology based on what a product and its users actually need, and I'm equally comfortable saying no to something fashionable.",
