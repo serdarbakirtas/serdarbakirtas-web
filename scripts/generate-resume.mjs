@@ -46,7 +46,7 @@ const experience = [
   {
     company: "Nord Security",
     role: "Senior iOS Engineer",
-    location: "Remote (Vilnius, Lithuania)",
+    location: "Berlin, Germany",
     dates: "2021 – 2023",
     bullets: [
       "Built the iOS encryption layer for NordLocker, implementing client-side AES-256 encryption (CryptoKit) so files were encrypted before ever leaving the device.",
@@ -57,7 +57,7 @@ const experience = [
   {
     company: "Diconium (for Volkswagen Group)",
     role: "iOS Engineer -> Senior iOS Engineer",
-    location: "Stuttgart, Germany (Remote)",
+    location: "Berlin, Germany",
     dates: "2018 – 2021",
     bullets: [
       "Led the incremental migration of Volkswagen Group's connected owner app from Objective-C to Swift and from UIKit to SwiftUI without pausing feature delivery.",

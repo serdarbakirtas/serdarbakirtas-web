@@ -49,7 +49,7 @@ export const experience: ExperienceEntry[] = [
     slug: "nord-security",
     company: "Nord Security",
     role: "Senior iOS Engineer",
-    location: "Remote (Vilnius, Lithuania)",
+    location: "Berlin, Germany",
     start: "2021",
     end: "2023",
     overview:
@@ -76,7 +76,7 @@ export const experience: ExperienceEntry[] = [
     slug: "diconium",
     company: "Diconium",
     role: "iOS Engineer → Senior iOS Engineer",
-    location: "Stuttgart, Germany (Remote)",
+    location: "Berlin, Germany",
     start: "2018",
     end: "2021",
     overview:

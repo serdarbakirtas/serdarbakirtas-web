@@ -221,7 +221,7 @@ export default function Home() {
                 Selected work
               </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-                Products I&apos;ve built end to end
+                Products I&apos;ve built
               </h2>
             </div>
             <Link
