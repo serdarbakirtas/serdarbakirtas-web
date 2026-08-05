@@ -13,6 +13,7 @@ export type Project = {
   challenges: string[];
   results: string[];
   lessons: string[];
+  liveUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -60,6 +61,51 @@ export const projects: Project[] = [
       "Constraints are a feature: building alone forced ruthless prioritization that the product is better for.",
       "Privacy-first isn't a marketing line if it changes real architecture decisions — it has to show up in how data is modeled, not just in a policy page.",
       "Shipping the marketing site, documentation, and support flow is as much part of 'the product' as the Swift code.",
+    ],
+  },
+  {
+    slug: "momena-website",
+    title: "Momena — Marketing Website",
+    role: "Founder & Web Engineer",
+    company: "Independent",
+    year: "2024 — Present",
+    summary:
+      "Designed and built the full marketing website for Momena from scratch — multilingual content (EN/TR/DE), blog infrastructure, SEO, and App Store landing page. No templates, no page builders.",
+    tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "MDX", "i18n", "SEO"],
+    liveUrl: "https://momena.app",
+    problem:
+      "Momena's iOS app needed a marketing presence that could explain a privacy-first product accurately, rank for the right search terms, and speak to users in their own language across three markets — without relying on a page builder that would compromise performance or make multilingual content unmanageable over time.",
+    solution:
+      "I designed and built momena.app entirely from scratch as a full-stack web product: a Next.js and TypeScript site styled with Tailwind CSS, structured content for English, Turkish, and German audiences, an MDX-based blog for product updates and privacy-focused writing, and an App Store landing page built to convert without gimmicks.",
+    architecture:
+      "The site is built on Next.js with TypeScript throughout, styled with Tailwind CSS, and structured around localized content trees for EN/TR/DE. Blog content is authored in MDX — the same content-as-code approach I use for my own writing — so there's no separate CMS to operate or secure. SEO — metadata, structured data, sitemaps — is treated as a first-class part of the architecture, not bolted on after launch.",
+    decisions: [
+      {
+        title: "No templates or page builders",
+        body: "Building the site by hand in Next.js meant slower initial setup than a page builder, but gave full control over performance, structure, and exactly how multilingual content and SEO metadata compose together — control I wasn't willing to trade for a faster first draft.",
+      },
+      {
+        title: "MDX for blog content, not a separate CMS",
+        body: "Keeping blog posts as MDX in the repository — the same pattern I use for my own writing — meant no CMS to operate or secure, consistent with the same 'no unnecessary backend' philosophy behind Momena the app.",
+      },
+      {
+        title: "i18n as a structural decision, not a translation layer bolted on",
+        body: "Structuring content trees per locale from the start, rather than retrofitting translation onto an English-only site, avoided the awkward compromises that usually show up in multilingual sites built as an afterthought.",
+      },
+    ],
+    challenges: [
+      "Structuring multilingual content (EN/TR/DE) so translations stay accurate and maintainable without a separate localization platform.",
+      "Building an App Store landing page that converts without resorting to a bloated third-party page builder.",
+      "Keeping SEO fundamentals — metadata, sitemaps, structured data — correct across three languages and a growing blog.",
+    ],
+    results: [
+      "Shipped momena.app end to end — design, engineering, content, and SEO — as a solo build alongside the iOS app itself.",
+      "Extended the same privacy-first, no-unnecessary-backend philosophy from the app to its own marketing site.",
+      "Established a content and blog infrastructure that scales to new languages and articles without re-architecting.",
+    ],
+    lessons: [
+      "Building the marketing site with the same rigor as the product it markets is worth it — visitors can tell when a landing page was an afterthought.",
+      "Treating i18n as an architecture decision from day one is far cheaper than retrofitting it later.",
     ],
   },
   {

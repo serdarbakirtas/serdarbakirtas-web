@@ -82,6 +82,17 @@ export default async function ProjectPage({
               </Badge>
             ))}
           </div>
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
+            >
+              Visit {project.liveUrl.replace(/^https?:\/\//, "")}
+              <ArrowUpRight className="size-4" />
+            </a>
+          ) : null}
         </Reveal>
       </Container>
 

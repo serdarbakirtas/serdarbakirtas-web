@@ -55,4 +55,9 @@ export const skillCategories: SkillCategory[] = [
     description: "Engineering practices that make privacy a default, not a setting.",
     items: ["AES-256 encryption", "CryptoKit", "On-device processing", "Data minimization"],
   },
+  {
+    category: "Web & Product",
+    description: "Full-stack web products, built with the same care as the apps they support.",
+    items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+  },
 ];

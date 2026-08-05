@@ -59,10 +59,11 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-7 max-w-xl text-balance text-lg leading-relaxed text-muted-foreground">
-                Senior Apple Platform Engineer with 16+ years of experience
-                building iOS, iPadOS, and macOS applications. I combine
-                engineering, product thinking, and emerging technologies to
-                create reliable, human-centered software.
+                Senior Apple Platform & Product Engineer with 16+ years of
+                experience. I build privacy-first iOS and macOS
+                applications, ship full-stack web products, and integrate
+                AI into real user experiences — from Swift to Next.js,
+                CoreML to Claude.
               </p>
             </Reveal>
             <Reveal delay={0.18}>
@@ -281,9 +282,10 @@ export default function Home() {
                 Have something worth building?
               </h2>
               <p className="mt-3 max-w-lg text-muted-foreground">
-                I&apos;m always glad to talk through a hard Apple platform
-                problem — architecture, computer vision, or turning a
-                research prototype into a shipped product.
+                I&apos;m always glad to talk through a hard engineering
+                problem — Apple platform architecture, computer vision,
+                full-stack product work, or turning a research prototype
+                into something people actually use.
               </p>
             </div>
             <Button asChild size="lg" className="shrink-0">

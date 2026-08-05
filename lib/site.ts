@@ -1,16 +1,16 @@
 export const siteConfig = {
   name: "Serdar Bakirtas",
   initials: "SB",
-  role: "Senior Apple Platform Engineer",
+  role: "Senior Apple Platform & Product Engineer",
   tagline:
     "Building privacy-first Apple products powered by modern Swift and intelligent, on-device technologies.",
   seoTitle:
-    "Serdar Bakirtas | Senior Apple Platform Engineer | Swift, AI & Privacy-first Products",
+    "Serdar Bakirtas | Senior Apple Platform & Product Engineer | Swift, Next.js, AI & Privacy-first Products",
   location: "Berlin, Germany",
   email: "serdarbakirtas@pm.me",
   url: "https://serdarbakirtas.com",
   description:
-    "Senior Apple Platform Engineer building privacy-first iOS, iPadOS and macOS applications with Swift, CoreML, Computer Vision and AI-enabled experiences.",
+    "Senior Apple Platform & Product Engineer with 16+ years of experience. Building privacy-first iOS and macOS apps with Swift, CoreML and Computer Vision — and full-stack web products with Next.js, React and TypeScript.",
   social: {
     github: "https://github.com/serdarbakirtas",
     linkedin: "https://www.linkedin.com/in/serdarbakirtas",
