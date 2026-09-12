@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+
 import {
   Accordion,
   AccordionContent,
@@ -8,16 +10,37 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import type { ExperienceEntry } from "@/lib/data/experience";
+import { track } from "@/lib/telemetry";
 
 export function ExperienceTimeline({
   entries,
 }: {
   entries: ExperienceEntry[];
 }) {
+  const [expanded, setExpanded] = React.useState<string[]>(() =>
+    entries[0] ? [entries[0].slug] : []
+  );
+
+  const handleValueChange = (value: string[]) => {
+    const opened = value.find((slug) => !expanded.includes(slug));
+    const entry = entries.find((item) => item.slug === opened);
+
+    if (entry) {
+      track("experience_expand", {
+        company: entry.company,
+        role: entry.role,
+        expanded_count: value.length,
+      });
+    }
+
+    setExpanded(value);
+  };
+
   return (
     <Accordion
       type="multiple"
-      defaultValue={[entries[0]?.slug]}
+      value={expanded}
+      onValueChange={handleValueChange}
       className="border-t border-border"
     >
       {entries.map((entry) => (

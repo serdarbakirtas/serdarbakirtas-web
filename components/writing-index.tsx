@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import { ArticleCard } from "@/components/article-card";
 import { cn } from "@/lib/utils";
 import type { PostMeta } from "@/lib/mdx";
+import { track } from "@/lib/telemetry";
 
 export function WritingIndex({
   posts,
@@ -17,16 +18,36 @@ export function WritingIndex({
   const [query, setQuery] = React.useState("");
   const [activeTag, setActiveTag] = React.useState<string | null>(null);
 
-  const filtered = posts.filter((post) => {
-    const matchesTag = activeTag ? post.tags.includes(activeTag) : true;
-    const q = query.trim().toLowerCase();
-    const matchesQuery = q
-      ? post.title.toLowerCase().includes(q) ||
-        post.excerpt.toLowerCase().includes(q) ||
-        post.tags.some((tag) => tag.toLowerCase().includes(q))
-      : true;
-    return matchesTag && matchesQuery;
-  });
+  const matching = (tag: string | null, search: string) =>
+    posts.filter((post) => {
+      const matchesTag = tag ? post.tags.includes(tag) : true;
+      const q = search.trim().toLowerCase();
+      const matchesQuery = q
+        ? post.title.toLowerCase().includes(q) ||
+          post.excerpt.toLowerCase().includes(q) ||
+          post.tags.some((postTag) => postTag.toLowerCase().includes(q))
+        : true;
+      return matchesTag && matchesQuery;
+    });
+
+  const filtered = matching(activeTag, query);
+
+  // Report the search once the typing settles, so a single query doesn't turn
+  // into one event per keystroke.
+  const resultCount = filtered.length;
+  React.useEffect(() => {
+    const term = query.trim();
+    if (!term) return;
+
+    const timeout = window.setTimeout(() => {
+      track("writing_search", {
+        search_term: term.toLowerCase(),
+        result_count: resultCount,
+      });
+    }, 800);
+
+    return () => window.clearTimeout(timeout);
+  }, [query, resultCount]);
 
   return (
     <div>
@@ -45,7 +66,13 @@ export function WritingIndex({
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => setActiveTag(null)}
+            onClick={() => {
+              setActiveTag(null);
+              track("writing_filter", {
+                filter_tag: "all",
+                result_count: matching(null, query).length,
+              });
+            }}
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
               activeTag === null
@@ -59,7 +86,14 @@ export function WritingIndex({
             <button
               key={tag}
               type="button"
-              onClick={() => setActiveTag(tag === activeTag ? null : tag)}
+              onClick={() => {
+                const nextTag = tag === activeTag ? null : tag;
+                setActiveTag(nextTag);
+                track("writing_filter", {
+                  filter_tag: nextTag ?? "all",
+                  result_count: matching(nextTag, query).length,
+                });
+              }}
               className={cn(
                 "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
                 activeTag === tag

@@ -35,6 +35,11 @@ jobs:
 
       - name: Build static export
         run: pnpm build
+        env:
+          # The measurement ID is not a secret — set it as a repository
+          # variable (Settings → Secrets and variables → Actions → Variables).
+          # Leave it unset and the site builds with telemetry disabled.
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

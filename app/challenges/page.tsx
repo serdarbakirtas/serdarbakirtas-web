@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
 import { challenges } from "@/lib/data/challenges";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Selected Challenges",
@@ -16,6 +17,16 @@ export const metadata: Metadata = {
 export default function ChallengesPage() {
   return (
     <>
+      <ScreenView
+        screen="challenges"
+        metrics={{
+          challenge_count: challenges.length,
+          challenge_context_count: new Set(
+            challenges.map((challenge) => challenge.context)
+          ).size,
+        }}
+      />
+
       <PageHeader
         eyebrow="Hard problems"
         title="Selected challenges"

@@ -5,6 +5,7 @@ import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { formatDate } from "@/lib/format";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Now",
@@ -45,6 +46,14 @@ const now = [
 export default function NowPage() {
   return (
     <>
+      <ScreenView
+        screen="now"
+        metrics={{
+          focus_count: now.length,
+          updated_at: new Date().toISOString().slice(0, 10),
+        }}
+      />
+
       <PageHeader
         eyebrow="Now"
         title="What I'm doing right now"

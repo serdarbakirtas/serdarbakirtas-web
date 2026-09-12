@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Uses",
@@ -58,6 +59,17 @@ const usesGroups = [
 export default function UsesPage() {
   return (
     <>
+      <ScreenView
+        screen="uses"
+        metrics={{
+          group_count: usesGroups.length,
+          tool_count: usesGroups.reduce(
+            (total, group) => total + group.items.length,
+            0
+          ),
+        }}
+      />
+
       <PageHeader
         eyebrow="Setup"
         title="Uses"

@@ -16,6 +16,12 @@ import { principles } from "@/lib/data/principles";
 import { projects } from "@/lib/data/projects";
 import { getAllPosts } from "@/lib/mdx";
 import { siteConfig } from "@/lib/site";
+import { linkDomain } from "@/lib/telemetry";
+import { ScreenView } from "@/components/telemetry/screen-view";
+import {
+  TrackedAnchor,
+  TrackedLink,
+} from "@/components/telemetry/tracked-link";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -37,6 +43,15 @@ export default function Home() {
 
   return (
     <>
+      <ScreenView
+        screen="home"
+        metrics={{
+          featured_project_count: featuredProjects.length,
+          featured_article_count: latestPosts.length,
+          principle_count: principles.length,
+        }}
+      />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -69,46 +84,78 @@ export default function Home() {
             <Reveal delay={0.18}>
               <div className="mt-9 flex flex-wrap items-center gap-3">
                 <Button asChild size="lg">
-                  <Link href="/resume">
+                  <TrackedLink
+                    href="/resume"
+                    event="cta_click"
+                    params={{
+                      cta_id: "hero_resume",
+                      cta_label: "Download Resume",
+                    }}
+                  >
                     <Download className="size-4" />
                     Download Resume
-                  </Link>
+                  </TrackedLink>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="/contact">
+                  <TrackedLink
+                    href="/contact"
+                    event="cta_click"
+                    params={{
+                      cta_id: "hero_contact",
+                      cta_label: "Get in touch",
+                    }}
+                  >
                     Get in touch
                     <ArrowRight className="size-4" />
-                  </Link>
+                  </TrackedLink>
                 </Button>
               </div>
             </Reveal>
             <Reveal delay={0.24}>
               <div className="mt-8 flex items-center gap-5">
-                <a
+                <TrackedAnchor
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub"
+                  event="outbound_click"
+                  params={{
+                    link_url: siteConfig.social.github,
+                    link_domain: linkDomain(siteConfig.social.github),
+                    link_label: "GitHub",
+                  }}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <GithubIcon className="size-5" />
-                </a>
-                <a
+                </TrackedAnchor>
+                <TrackedAnchor
                   href={siteConfig.social.linkedin}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
+                  event="outbound_click"
+                  params={{
+                    link_url: siteConfig.social.linkedin,
+                    link_domain: linkDomain(siteConfig.social.linkedin),
+                    link_label: "LinkedIn",
+                  }}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <LinkedinIcon className="size-5" />
-                </a>
-                <a
+                </TrackedAnchor>
+                <TrackedAnchor
                   href={siteConfig.social.email}
                   aria-label="Email"
+                  event="outbound_click"
+                  params={{
+                    link_url: siteConfig.social.email,
+                    link_domain: "email",
+                    link_label: "Email",
+                  }}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <Mail className="size-5" />
-                </a>
+                </TrackedAnchor>
               </div>
             </Reveal>
           </div>
@@ -289,10 +336,17 @@ export default function Home() {
               </p>
             </div>
             <Button asChild size="lg" className="shrink-0">
-              <Link href="/contact">
+              <TrackedLink
+                href="/contact"
+                event="cta_click"
+                params={{
+                  cta_id: "home_footer_contact",
+                  cta_label: "Start a conversation",
+                }}
+              >
                 Start a conversation
                 <ArrowRight className="size-4" />
-              </Link>
+              </TrackedLink>
             </Button>
           </Reveal>
         </Container>

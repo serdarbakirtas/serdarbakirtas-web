@@ -7,6 +7,7 @@ import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup } from "@/components/reveal";
 import { Separator } from "@/components/ui/separator";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "AI & Intelligent Products",
@@ -68,6 +69,11 @@ const topics = [
 export default function AIPage() {
   return (
     <>
+      <ScreenView
+        screen="ai"
+        metrics={{ topic_count: topics.length, has_case_study_link: true }}
+      />
+
       <PageHeader
         eyebrow="AI & Intelligent Products"
         title="I build AI-powered Apple products — I don't train the models."

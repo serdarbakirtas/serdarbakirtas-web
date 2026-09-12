@@ -5,6 +5,7 @@ import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { principles } from "@/lib/data/principles";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Engineering Principles",
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
 export default function PrinciplesPage() {
   return (
     <>
+      <ScreenView
+        screen="principles"
+        metrics={{ principle_count: principles.length }}
+      />
+
       <PageHeader
         eyebrow="How I work"
         title="Engineering principles"

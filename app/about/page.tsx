@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup } from "@/components/reveal";
 import { Separator } from "@/components/ui/separator";
 import { skillCategories } from "@/lib/data/skills";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "About",
@@ -43,6 +44,18 @@ const arc = [
 export default function AboutPage() {
   return (
     <>
+      <ScreenView
+        screen="about"
+        metrics={{
+          career_stage_count: arc.length,
+          skill_category_count: skillCategories.length,
+          skill_count: skillCategories.reduce(
+            (total, category) => total + category.items.length,
+            0
+          ),
+        }}
+      />
+
       <PageHeader
         eyebrow="About"
         title="I design, engineer, and ship — not just one of the three."

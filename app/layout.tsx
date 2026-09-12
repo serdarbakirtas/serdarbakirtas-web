@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Providers } from "@/components/providers";
+import { Analytics } from "@/components/telemetry/analytics";
 import { PageTransition } from "@/components/page-transition";
 import { siteConfig } from "@/lib/site";
 
@@ -90,6 +91,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
