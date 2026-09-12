@@ -15,6 +15,9 @@ export type PostFrontmatter = {
 export type PostMeta = PostFrontmatter & {
   slug: string;
   readingTime: string;
+  /** Rounded reading time and length, reported as telemetry metrics. */
+  readingMinutes: number;
+  wordCount: number;
 };
 
 export type Post = PostMeta & {
@@ -35,11 +38,14 @@ export function getAllPosts(): PostMeta[] {
     const raw = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(raw);
     const frontmatter = data as PostFrontmatter;
+    const stats = readingTime(content);
 
     return {
       ...frontmatter,
       slug,
-      readingTime: readingTime(content).text,
+      readingTime: stats.text,
+      readingMinutes: Math.round(stats.minutes),
+      wordCount: stats.words,
     };
   });
 
@@ -55,11 +61,14 @@ export function getPostBySlug(slug: string): Post | null {
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
   const frontmatter = data as PostFrontmatter;
+  const stats = readingTime(content);
 
   return {
     ...frontmatter,
     slug,
-    readingTime: readingTime(content).text,
+    readingTime: stats.text,
+    readingMinutes: Math.round(stats.minutes),
+    wordCount: stats.words,
     content,
   };
 }

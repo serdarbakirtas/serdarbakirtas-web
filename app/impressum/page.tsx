@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Impressum",
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
 export default function ImpressumPage() {
   return (
     <>
+      <ScreenView screen="impressum" metrics={{}} />
+
       <PageHeader eyebrow="Legal" title="Impressum" />
 
       <Section className="pt-0">

@@ -5,13 +5,21 @@ import { Section } from "@/components/section";
 import { PageHeader } from "@/components/page-header";
 import { Reveal, RevealGroup } from "@/components/reveal";
 import { Badge } from "@/components/ui/badge";
-import { playgroundItems } from "@/lib/data/playground";
+import {
+  playgroundItems,
+  type PlaygroundItem,
+} from "@/lib/data/playground";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Playground",
   description:
     "Experiments, open-source packages, visionOS sketches, and WWDC notes — the things I build when nobody's asking me to.",
 };
+
+function countByStatus(status: PlaygroundItem["status"]) {
+  return playgroundItems.filter((item) => item.status === status).length;
+}
 
 const statusVariant = {
   Exploring: "accent",
@@ -22,6 +30,16 @@ const statusVariant = {
 export default function PlaygroundPage() {
   return (
     <>
+      <ScreenView
+        screen="playground"
+        metrics={{
+          item_count: playgroundItems.length,
+          shipped_count: countByStatus("Shipped"),
+          exploring_count: countByStatus("Exploring"),
+          notes_count: countByStatus("Notes"),
+        }}
+      />
+
       <PageHeader
         eyebrow="Side projects"
         title="Playground"

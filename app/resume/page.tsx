@@ -7,6 +7,8 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { experience } from "@/lib/data/experience";
+import { ScreenView } from "@/components/telemetry/screen-view";
+import { TrackedAnchor } from "@/components/telemetry/tracked-link";
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -16,6 +18,14 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <>
+      <ScreenView
+        screen="resume"
+        metrics={{
+          role_count: experience.length,
+          resume_year: new Date().getFullYear(),
+        }}
+      />
+
       <PageHeader
         eyebrow="Resume"
         title="Resume"
@@ -33,16 +43,27 @@ export default function ResumePage() {
             </div>
             <div className="flex gap-2">
               <Button asChild size="sm">
-                <a href="/resume.pdf" download>
+                <TrackedAnchor
+                  href="/resume.pdf"
+                  download
+                  event="resume_download"
+                  params={{ file_name: "resume.pdf" }}
+                >
                   <Download className="size-4" />
                   Download
-                </a>
+                </TrackedAnchor>
               </Button>
               <Button asChild size="sm" variant="outline">
-                <a href="/resume.pdf" target="_blank" rel="noreferrer">
+                <TrackedAnchor
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  event="cta_click"
+                  params={{ cta_id: "resume_view", cta_label: "View" }}
+                >
                   <ExternalLink className="size-4" />
                   View
-                </a>
+                </TrackedAnchor>
               </Button>
             </div>
           </Reveal>

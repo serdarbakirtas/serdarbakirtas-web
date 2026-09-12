@@ -1,9 +1,13 @@
-import Link from "next/link";
 import { Mail } from "lucide-react";
 
 import { Container } from "@/components/container";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { footerNavItems, navItems, siteConfig } from "@/lib/site";
+import { linkDomain } from "@/lib/telemetry";
+import {
+  TrackedAnchor,
+  TrackedLink,
+} from "@/components/telemetry/tracked-link";
 
 export function Footer() {
   return (
@@ -24,13 +28,19 @@ export function Footer() {
               Explore
             </p>
             {navItems.slice(0, 5).map((item) => (
-              <Link
+              <TrackedLink
                 key={item.href}
                 href={item.href}
+                event="nav_click"
+                params={{
+                  nav_label: item.label,
+                  nav_href: item.href,
+                  nav_surface: "footer",
+                }}
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 {item.label}
-              </Link>
+              </TrackedLink>
             ))}
           </div>
 
@@ -39,24 +49,36 @@ export function Footer() {
               More
             </p>
             {navItems.slice(5).map((item) => (
-              <Link
+              <TrackedLink
                 key={item.href}
                 href={item.href}
+                event="nav_click"
+                params={{
+                  nav_label: item.label,
+                  nav_href: item.href,
+                  nav_surface: "footer",
+                }}
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 {item.label}
-              </Link>
+              </TrackedLink>
             ))}
             {footerNavItems
               .filter((item) => item.label === "Resume")
               .map((item) => (
-                <Link
+                <TrackedLink
                   key={item.href}
                   href={item.href}
+                  event="nav_click"
+                  params={{
+                    nav_label: item.label,
+                    nav_href: item.href,
+                    nav_surface: "footer",
+                  }}
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {item.label}
-                </Link>
+                </TrackedLink>
               ))}
           </div>
 
@@ -64,28 +86,46 @@ export function Footer() {
             <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Connect
             </p>
-            <a
+            <TrackedAnchor
               href={siteConfig.social.github}
               target="_blank"
               rel="noreferrer"
+              event="outbound_click"
+              params={{
+                link_url: siteConfig.social.github,
+                link_domain: linkDomain(siteConfig.social.github),
+                link_label: "GitHub",
+              }}
               className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <GithubIcon className="size-4" /> GitHub
-            </a>
-            <a
+            </TrackedAnchor>
+            <TrackedAnchor
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noreferrer"
+              event="outbound_click"
+              params={{
+                link_url: siteConfig.social.linkedin,
+                link_domain: linkDomain(siteConfig.social.linkedin),
+                link_label: "LinkedIn",
+              }}
               className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <LinkedinIcon className="size-4" /> LinkedIn
-            </a>
-            <a
+            </TrackedAnchor>
+            <TrackedAnchor
               href={siteConfig.social.email}
+              event="outbound_click"
+              params={{
+                link_url: siteConfig.social.email,
+                link_domain: "email",
+                link_label: "Email",
+              }}
               className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <Mail className="size-4" /> Email
-            </a>
+            </TrackedAnchor>
           </div>
         </div>
 
@@ -95,12 +135,18 @@ export function Footer() {
             built by hand.
           </p>
           <div className="flex items-center gap-4">
-            <Link
+            <TrackedLink
               href="/impressum"
+              event="nav_click"
+              params={{
+                nav_label: "Impressum",
+                nav_href: "/impressum",
+                nav_surface: "footer",
+              }}
               className="transition-colors hover:text-foreground"
             >
               Impressum
-            </Link>
+            </TrackedLink>
             <p className="font-mono">Berlin, Germany</p>
           </div>
         </div>

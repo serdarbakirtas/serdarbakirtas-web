@@ -13,6 +13,7 @@ import { ArticleCard } from "@/components/article-card";
 import { formatDate } from "@/lib/format";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/mdx";
 import { siteConfig } from "@/lib/site";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -66,6 +67,19 @@ export default async function ArticlePage({
 
   return (
     <>
+      <ScreenView
+        screen="article"
+        metrics={{
+          article_slug: post.slug,
+          article_tags: post.tags.join(", "),
+          article_tag_count: post.tags.length,
+          published_at: post.date,
+          reading_minutes: post.readingMinutes,
+          word_count: post.wordCount,
+          related_count: related.length,
+        }}
+      />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

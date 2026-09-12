@@ -1,13 +1,19 @@
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { TrackedLink } from "@/components/telemetry/tracked-link";
 import type { Project } from "@/lib/data/projects";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link
+    <TrackedLink
       href={`/projects/${project.slug}`}
+      event="content_open"
+      params={{
+        content_type: "project",
+        content_id: project.slug,
+        content_title: project.title,
+      }}
       className="group flex flex-col justify-between gap-6 rounded-2xl border border-border bg-card p-7 transition-colors hover:border-accent/40"
     >
       <div>
@@ -31,6 +37,6 @@ export function ProjectCard({ project }: { project: Project }) {
           </Badge>
         ))}
       </div>
-    </Link>
+    </TrackedLink>
   );
 }

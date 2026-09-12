@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/page-header";
 import { RevealGroup } from "@/components/reveal";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/lib/data/projects";
+import { ScreenView } from "@/components/telemetry/screen-view";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -16,6 +17,15 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
+      <ScreenView
+        screen="projects"
+        metrics={{
+          project_count: projects.length,
+          project_tag_count: new Set(projects.flatMap((project) => project.tags))
+            .size,
+        }}
+      />
+
       <PageHeader
         eyebrow="Selected work"
         title="Projects"

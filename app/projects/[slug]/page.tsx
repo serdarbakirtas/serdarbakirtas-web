@@ -13,6 +13,9 @@ import { ScreenshotPlaceholder } from "@/components/screenshot-placeholder";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/lib/data/projects";
 import { getProjectCoverImage } from "@/lib/project-image";
+import { linkDomain } from "@/lib/telemetry";
+import { ScreenView } from "@/components/telemetry/screen-view";
+import { TrackedAnchor } from "@/components/telemetry/tracked-link";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -55,6 +58,19 @@ export default async function ProjectPage({
 
   return (
     <>
+      <ScreenView
+        screen="project_detail"
+        metrics={{
+          project_slug: project.slug,
+          project_company: project.company,
+          project_year: project.year,
+          project_tag_count: project.tags.length,
+          decision_count: project.decisions.length,
+          has_live_url: Boolean(project.liveUrl),
+          has_cover_image: Boolean(coverImage),
+        }}
+      />
+
       <Container className="pb-10 pt-32 md:pt-40">
         <Reveal>
           <Link
@@ -83,15 +99,21 @@ export default async function ProjectPage({
             ))}
           </div>
           {project.liveUrl ? (
-            <a
+            <TrackedAnchor
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
+              event="outbound_click"
+              params={{
+                link_url: project.liveUrl,
+                link_domain: linkDomain(project.liveUrl),
+                link_label: `${project.title} — live site`,
+              }}
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
             >
               Visit {project.liveUrl.replace(/^https?:\/\//, "")}
               <ArrowUpRight className="size-4" />
-            </a>
+            </TrackedAnchor>
           ) : null}
         </Reveal>
       </Container>

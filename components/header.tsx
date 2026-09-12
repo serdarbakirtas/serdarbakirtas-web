@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { navItems, siteConfig } from "@/lib/site";
+import { track } from "@/lib/telemetry";
+import { TrackedLink } from "@/components/telemetry/tracked-link";
 
 export function Header() {
   const pathname = usePathname();
@@ -26,7 +28,14 @@ export function Header() {
         <Link
           href="/"
           className="shrink-0 font-mono text-sm font-medium tracking-tight text-foreground"
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            track("nav_click", {
+              nav_label: siteConfig.initials,
+              nav_href: "/",
+              nav_surface: "brand",
+            });
+            setOpen(false);
+          }}
         >
           {siteConfig.initials}
           <span className="text-muted-foreground">/serdar</span>
@@ -40,6 +49,13 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() =>
+                  track("nav_click", {
+                    nav_label: item.label,
+                    nav_href: item.href,
+                    nav_surface: "header",
+                  })
+                }
                 className={cn(
                   "whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground",
                   active && "text-foreground"
@@ -56,7 +72,13 @@ export function Header() {
             <ThemeToggle />
           </div>
           <Button asChild size="sm" className="hidden xl:inline-flex">
-            <Link href="/contact">Get in touch</Link>
+            <TrackedLink
+              href="/contact"
+              event="cta_click"
+              params={{ cta_id: "header_contact", cta_label: "Get in touch" }}
+            >
+              Get in touch
+            </TrackedLink>
           </Button>
 
           <div className="xl:hidden">
@@ -73,7 +95,14 @@ export function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        track("nav_click", {
+                          nav_label: item.label,
+                          nav_href: item.href,
+                          nav_surface: "mobile_menu",
+                        });
+                        setOpen(false);
+                      }}
                       className={cn(
                         "rounded-xl px-4 py-3 text-base font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground",
                         (pathname === item.href ||
@@ -88,7 +117,16 @@ export function Header() {
                 <div className="flex items-center justify-between border-t border-border pt-5">
                   <ThemeToggle />
                   <Button asChild size="sm" onClick={() => setOpen(false)}>
-                    <Link href="/contact">Get in touch</Link>
+                    <TrackedLink
+                      href="/contact"
+                      event="cta_click"
+                      params={{
+                        cta_id: "mobile_menu_contact",
+                        cta_label: "Get in touch",
+                      }}
+                    >
+                      Get in touch
+                    </TrackedLink>
                   </Button>
                 </div>
               </SheetContent>

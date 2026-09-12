@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { track } from "@/lib/telemetry";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -13,7 +14,11 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       aria-label="Toggle theme"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={() => {
+        const next = resolvedTheme === "dark" ? "light" : "dark";
+        track("theme_change", { theme: next });
+        setTheme(next);
+      }}
       className="relative text-muted-foreground hover:text-foreground"
     >
       <Sun className="size-[18px] scale-100 dark:scale-0" />
