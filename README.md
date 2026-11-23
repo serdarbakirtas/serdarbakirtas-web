@@ -39,6 +39,8 @@ This produces a fully static export in `out/` (`next.config.ts` sets `output: "e
 
 ## Resume
 
+> **The shipped PDF is currently a hand-made export, not this script's output.** `public/resume.pdf` was replaced with an Enhancv-designed version. Running `pnpm resume` **overwrites it** with the plain ATS version below. Update the Enhancv source and re-export instead, or retire the script if the designed PDF is now the one you want.
+
 `public/resume.pdf` is generated from [`scripts/generate-resume.mjs`](scripts/generate-resume.mjs) — a single-column, plain-text PDF (base-14 Helvetica, no tables/images/columns) built to parse cleanly in ATS systems. To update it after changing role, skills, or experience details, edit the data at the top of the script and regenerate:
 
 ```bash

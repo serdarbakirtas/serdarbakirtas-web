@@ -8,17 +8,35 @@ export type ExperienceEntry = {
   overview: string;
   challenges: string[];
   technologies: string[];
-  impact: string[];
+  /** Omitted for a role too new to have results worth claiming. */
+  impact?: string[];
 };
 
 export const experience: ExperienceEntry[] = [
+  {
+    slug: "n26",
+    company: "N26",
+    role: "Senior iOS Engineer",
+    location: "Berlin, Germany",
+    start: "2026",
+    end: "Present",
+    // Placeholder — expand the challenges and add an `impact` list once there
+    // is shipped work worth describing.
+    overview:
+      "N26 is a mobile bank serving customers across Europe. I joined the Payment team in November 2026, working on the payment experiences inside the iOS app — a domain where correctness, failure handling, and regulatory constraints carry as much weight as the interface does.",
+    challenges: [
+      "Building payment flows where the cost of getting an edge case wrong is someone's money, not a layout glitch.",
+      "Working inside a large modular iOS codebase shared by many teams shipping to the same app.",
+    ],
+    technologies: ["Swift", "SwiftUI", "Swift Concurrency", "XCTest"],
+  },
   {
     slug: "magnosco",
     company: "Magnosco",
     role: "Senior Apple Platform Engineer",
     location: "Berlin, Germany",
     start: "2023",
-    end: "Present",
+    end: "2026",
     overview:
       "Magnosco builds computer-vision-assisted diagnostic tools for skin cancer detection, working closely with dermatologists and imaging scientists. My role is bringing their AI research into a production Apple application — not training the models, but turning a research-grade imaging device into a product a clinician can trust, from the Wi-Fi connection through image preprocessing, on-device inference, and secure transmission of results.",
     challenges: [

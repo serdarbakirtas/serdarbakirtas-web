@@ -74,7 +74,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-7 max-w-xl text-balance text-lg leading-relaxed text-muted-foreground">
-                Senior Apple Platform & Product Engineer with 16+ years of
+                Senior Apple Platform & Product Engineer with 17+ years of
                 experience. I build privacy-first iOS and macOS
                 applications, ship full-stack web products, and integrate
                 AI into real user experiences — from Swift to Next.js,
@@ -190,8 +190,12 @@ export default function Home() {
               vision — building diagnostic tools at{" "}
               <Link href="/experience" className="underline decoration-border underline-offset-4 hover:text-accent hover:decoration-accent">
                 Magnosco
-              </Link>{" "}
-              and an entire product ecosystem, alone, at{" "}
+              </Link>
+              , payments at{" "}
+              <Link href="/experience" className="underline decoration-border underline-offset-4 hover:text-accent hover:decoration-accent">
+                N26
+              </Link>
+              , and an entire product ecosystem, alone, at{" "}
               <Link href="/projects/momena" className="underline decoration-border underline-offset-4 hover:text-accent hover:decoration-accent">
                 Momena
               </Link>

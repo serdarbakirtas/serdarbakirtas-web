@@ -27,7 +27,7 @@ export default function WritingPage() {
       <PageHeader
         eyebrow="Writing"
         title="Notes on building"
-        description="Practical notes from sixteen years of shipping Apple products — architecture, computer vision, and the occasional retrospective."
+        description="Practical notes from seventeen years of shipping Apple products — architecture, computer vision, and the occasional retrospective."
       />
 
       <Section className="pt-0">

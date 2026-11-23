@@ -1,4 +1,6 @@
 // Generates public/resume.pdf — a single-column, plain-text, ATS-friendly resume.
+// NOTE: public/resume.pdf is currently a hand-made (Enhancv) export, not this
+// script's output. Running this WILL overwrite it. See README before you do.
 // No tables, columns, images, or embedded icons; base-14 Helvetica only.
 // Run with: node scripts/generate-resume.mjs
 import fs from "node:fs";
@@ -20,7 +22,7 @@ const contact = {
 };
 
 const summary =
-  "Senior Apple Platform Engineer with 16+ years of experience building iOS, iPadOS, and macOS applications. Specializes in bringing computer vision and AI research into production-quality Apple products, with a strong focus on privacy-first architecture and on-device processing. Founded and independently shipped Momena, a complete privacy-first consumer application.";
+  "Senior Apple Platform Engineer with 17+ years of experience building iOS, iPadOS, and macOS applications. Specializes in bringing computer vision and AI research into production-quality Apple products, with a strong focus on privacy-first architecture and on-device processing. Founded and independently shipped Momena, a complete privacy-first consumer application.";
 
 const skills = [
   ["Languages & UI", "Swift, SwiftUI, UIKit, Objective-C, SwiftData, Combine, Swift Concurrency"],
@@ -32,10 +34,20 @@ const skills = [
 
 const experience = [
   {
+    company: "N26",
+    role: "Senior iOS Engineer",
+    location: "Berlin, Germany",
+    dates: "2026 – Present",
+    bullets: [
+      "Senior iOS Engineer on the Payment team, building payment experiences in a mobile bank serving customers across Europe.",
+      "Working in a large, modular Swift codebase shared across many teams shipping to a single app.",
+    ],
+  },
+  {
     company: "Magnosco",
     role: "Senior Apple Platform Engineer",
     location: "Berlin, Germany",
-    dates: "2023 – Present",
+    dates: "2023 – 2026",
     bullets: [
       "Own the iOS application connecting a dermatological imaging device to an on-device CoreML diagnostic pipeline, translating PyTorch research models into production Swift/CoreML implementations.",
       "Redesigned a memory-heavy computer vision workflow on iPad using actor-based concurrency, intelligent caching, and conditional model execution, cutting peak memory from ~4GB to 1.2GB and eliminating crashes.",

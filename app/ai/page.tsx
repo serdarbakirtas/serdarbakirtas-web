@@ -84,7 +84,7 @@ export default function AIPage() {
         <Container className="max-w-3xl">
           <Reveal>
             <p className="text-lg leading-relaxed text-foreground/90">
-              At Magnosco, I work alongside scientists building computer
+              At Magnosco I worked alongside scientists building computer
               vision solutions for skin cancer diagnostics — integrating
               multiple CoreML models into a production iOS application,
               building the OpenCV pipelines that feed them, and translating

@@ -113,7 +113,7 @@ export const projects: Project[] = [
     title: "Magnosco — Diagnostic Imaging Platform",
     role: "Senior Apple Platform Engineer",
     company: "Magnosco",
-    year: "2023 — Present",
+    year: "2023 — 2026",
     summary:
       "The iOS application connecting a dermatological imaging device to an on-device CoreML diagnostic pipeline, built in close collaboration with imaging scientists.",
     tags: ["CoreML", "OpenCV", "mTLS", "Medical Imaging", "Swift Concurrency"],
