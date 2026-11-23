@@ -27,6 +27,7 @@ const summary =
 const skills = [
   ["Languages & UI", "Swift, SwiftUI, UIKit, Objective-C, SwiftData, Combine, Swift Concurrency"],
   ["AI & Computer Vision", "CoreML, OpenCV, On-device Inference, PyTorch Collaboration, LLM Integration"],
+  ["Payments & Fintech", "Apple Pay, PassKit, StoreKit 2, PSD2/SCA, 3-D Secure, Idempotent Payment Flows"],
   ["Architecture", "Modular Swift Packages, Clean Architecture, MVVM, Dependency Injection"],
   ["Security & Privacy", "mTLS, CryptoKit, AES-256 Encryption, Privacy-first Design"],
   ["Platforms & Tools", "iOS, iPadOS, macOS, Xcode, Instruments, Git, Fastlane, GitHub Actions"],
