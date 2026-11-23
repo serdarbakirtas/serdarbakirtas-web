@@ -21,6 +21,18 @@ export const skillCategories: SkillCategory[] = [
     items: ["Modular Swift packages", "Clean Architecture", "MVVM", "Dependency injection"],
   },
   {
+    category: "Payments & Fintech",
+    description:
+      "Payment experiences in a regulated domain where the failure path is the product.",
+    items: [
+      "Apple Pay & PassKit",
+      "StoreKit 2",
+      "PSD2 / SCA",
+      "3-D Secure",
+      "Idempotent payment flows",
+    ],
+  },
+  {
     category: "Computer Vision",
     description: "Turning camera and sensor input into usable, model-ready data.",
     items: ["OpenCV", "Core Image", "Image preprocessing", "Feature extraction"],
