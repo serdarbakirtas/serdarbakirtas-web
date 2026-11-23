@@ -10,7 +10,7 @@ import { ScreenView } from "@/components/telemetry/screen-view";
 export const metadata: Metadata = {
   title: "Experience",
   description:
-    "Sixteen years across Magnosco, Nord Security, Diconium, Oculavis, VNGRS, and the creative agencies where it all started.",
+    "Seventeen years across N26, Magnosco, Nord Security, Diconium, Oculavis, VNGRS, and the creative agencies where it all started.",
 };
 
 const careerSpanYears =

@@ -10,7 +10,7 @@ export const siteConfig = {
   email: "serdarbakirtas@pm.me",
   url: "https://serdarbakirtas.com",
   description:
-    "Senior Apple Platform & Product Engineer with 16+ years of experience. Building privacy-first iOS and macOS apps with Swift, CoreML and Computer Vision — and full-stack web products with Next.js, React and TypeScript.",
+    "Senior Apple Platform & Product Engineer with 17+ years of experience. Building privacy-first iOS and macOS apps with Swift, CoreML and Computer Vision — and full-stack web products with Next.js, React and TypeScript.",
   social: {
     github: "https://github.com/serdarbakirtas",
     linkedin: "https://www.linkedin.com/in/serdarbakirtas",

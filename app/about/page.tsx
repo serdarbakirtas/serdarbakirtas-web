@@ -11,7 +11,7 @@ import { ScreenView } from "@/components/telemetry/screen-view";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "From interaction design to Apple platform engineering — the story behind sixteen years of building digital products.",
+    "From interaction design to Apple platform engineering — the story behind seventeen years of building digital products.",
 };
 
 const arc = [
@@ -34,6 +34,10 @@ const arc = [
   {
     stage: "Founder",
     body: "Building Momena alone — design, engineering, encryption, App Store operations, support — was the fastest way I know to find out which of your instincts actually hold up when there's no one else to defer to.",
+  },
+  {
+    stage: "Payments at N26",
+    body: "In November 2026 I joined N26's Payment team as a Senior iOS Engineer. After years of medical imaging, the constraint changed shape but not severity: in diagnostics a wrong result misleads a clinician, in payments a wrong edge case moves someone's money. Both reward the same instinct — treat the failure path as the real product.",
   },
   {
     stage: "Intelligent, Privacy-First Products",
@@ -59,7 +63,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About"
         title="I design, engineer, and ship — not just one of the three."
-        description="Sixteen years, one throughline: making complex technology disappear behind something that feels obvious to use."
+        description="Seventeen years, one throughline: making complex technology disappear behind something that feels obvious to use."
       />
 
       <Section className="pt-0">

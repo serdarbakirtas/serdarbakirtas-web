@@ -96,20 +96,24 @@ export function ExperienceTimeline({
                   ))}
                 </div>
 
-                <p className="mt-6 text-xs font-medium uppercase tracking-wider text-foreground">
-                  Impact
-                </p>
-                <ul className="mt-3 space-y-2">
-                  {entry.impact.map((point) => (
-                    <li
-                      key={point}
-                      className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
-                    >
-                      <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+                {entry.impact?.length ? (
+                  <>
+                    <p className="mt-6 text-xs font-medium uppercase tracking-wider text-foreground">
+                      Impact
+                    </p>
+                    <ul className="mt-3 space-y-2">
+                      {entry.impact.map((point) => (
+                        <li
+                          key={point}
+                          className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
+                        >
+                          <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
               </div>
             </div>
           </AccordionContent>

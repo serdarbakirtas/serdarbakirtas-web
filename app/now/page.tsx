@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 const now = [
   {
-    title: "Computer vision at Magnosco",
-    body: "Deep in refining the imaging pipeline's preprocessing and evaluating a new CoreML model version against the current one — accuracy, latency, and thermal impact all under review.",
+    title: "Payments at N26",
+    body: "Three weeks into the Payment team — reading my way through a large, modular iOS codebase and learning how a bank's payment flows hold up under the edge cases that matter.",
   },
   {
     title: "Apple Intelligence & Foundation Models",
